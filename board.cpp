@@ -3,6 +3,7 @@
 using namespace std;
 
 class board{
+    protected:
       int tile[4][4];
     public:
       board()
