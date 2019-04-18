@@ -1,31 +1,32 @@
 #include <iostream>
+#include<string.h>
 using namespace std;
 
 class board{
     protected:
       int tile[4][4];
     public:
-      board()
-      {
-              initialize();
-      }
+      board(){initialize();} //constructor
       void initialize();
-      void draw();  
-      ~board();
+      void draw();
+      void set(int, int, int);
+      int pull(int, int);  
+      ~board(){} //destructor
       board(board&);
-      board& operator=(board&);
+      board& operator=(board& b){memcpy(tile, b.tile, sizeof(tile));} //operator assignment
 };
 class check: public board{
-      public:
         int max_value;
-        void randomnumber();
+      public:
+        board b; 
+        int randomnumber();
         int findempty();
         int win();
         int playagain();
         check();
-        ~check();
-        check& operator=(check&);
-        check(check&);
+        ~check(){}
+        check& operator=(check& c){max_value=c.max_value;}
+        check(check& c);
 };
 class move: public board{
         char playermove;
@@ -38,14 +39,5 @@ class move: public board{
         move();
         ~move();
         check& operator=(move&);
-//        move(&move);
+        move(move&);
 };
-
-int main()
-{
-        //do{
-                //board
-                //move
-                //check
-//        }
-}

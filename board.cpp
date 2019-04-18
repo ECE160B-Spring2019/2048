@@ -1,27 +1,24 @@
-#include <iostream>
-#include <string.h>
-using namespace std;
-
 class board{
     protected:
       int tile[4][4];
     public:
-      board()
-      {
-              initialize();
-      }
+      board(){initialize();} //constructor
       void initialize();
-      void draw();  
-      ~board(){}
+      void draw();
+      void set(int, int, int);
+      int pull(int, int);  
+      ~board(){} //destructor
       board(board&);
-      board& operator=(board& b){memcpy(tile, b.tile, sizeof(tile));}
+      board& operator=(board& b){memcpy(tile, b.tile, sizeof(tile));} //operator assignment
 };
 
+//copy constructor
 board::board(board& b)
 {
         memcpy(tile, b.tile, sizeof(tile));
 }
 
+//sets all values in the array to zero
 void board::initialize()
 {
         int first_pos, row, col, first_value;
@@ -39,26 +36,43 @@ void board::initialize()
         first_value==0 ? tile[row][col]=2 : tile[row][col]=4;
 }
 
+//prints the board out
 void board::draw()
 {
-        cout<<"*****************"<<endl;
+        cout<<"*********************"<<endl;
         for(int jj=0; jj<4; jj++)
         {
                 cout<<"*";
                 for(int ii=0; ii<4; ii++)
                 {
                         if(tile[jj][ii]!=0){
-                                cout<<tile[jj][ii]<<"*";
+                                if(tile[jj][ii]<10){
+                                        cout<<"  "<<tile[jj][ii]<<" *";
+                                }else if(tile[jj][ii]<100){
+                                        cout<<" "<<tile[jj][ii]<<" *";
+                                }else if(tile[jj][ii]<1000){
+                                        cout<<tile[jj][ii]<<" *";
+                                }else{
+                                        cout<<tile[jj][ii]<<"*";
+                                }
+
                         }else{
                                 cout<<"   *";
                         }
                 }
-        cout<<endl<<"*****************"<<endl;                   
+        cout<<endl<<"*********************"<<endl;                   
         } 
+        cout<<endl;
 }
 
-int main()
+//sets value in the array
+void board::set(int row, int col, int number)
 {
-        board b;
-        b.draw();
+        tile[row][col]=number;
+}
+
+//reads the value in the array
+int board::pull(int row, int col)
+{
+        return tile[row][col];
 }
