@@ -22,13 +22,19 @@ class move : public board {
 */
 
 
-void move_up(int array [5][5])
-{
+
+
+
+
+
+
+
 //  string user_vertical_input;                
-  int counter;
-  int a,b,c;
 // cin>>user_vertical_input;
 //  if (user_vertical_input == "w") {
+void move_up(int array [5][5]){
+  int counter;
+  int a,b,c;
 
   for (int counter=0;counter<3;counter++) {
     for ( int column = 0; column < 4; column++) {      //loops through the columns
@@ -60,63 +66,18 @@ void combine_up (int array [5][5]) {
         array[row+1][column]=0;
       }
     }
- /*   if (array[1][column] ==0 && array[3][column] ==0) {
-      int temp1;
-      temp1 = array [1][column];
-      array[1][column]=array[2][column];
-      array[2][column]=temp1;
-    }
-    if (array [2] [column] ==0 && array [3][column]!=0) {
-      int temp2= array[2][column];
-      array[2][column]=array[3][column];
-      array[3][column]=temp2;
-
-    }
-*/move_up(array);
+    move_up(array);
   }
   return; 
 }
-/*
-        if (row <3 && array [row][column] ==0){
-
-          for (int counter = 0; counter <3;counter++){
-*/
-
-
-
-  //        int a= array[row][column];
-    //      int b=array[row+1][column];
-//          int c=b;
-  //        b=a;
-    //      a=c;
-      //    array[row][column]=a;
-        //  array[row+1][column]=b;
-       
-
-//      }
-//        }
-  //    }
-
-
-    //}
-
-
-//  } 
 
 
 
 
-
+  
 
 
 //  else if (user_vertical_input == "s") {
-
-
-
-
-//THIS IS TO GO DOWN
-
-
 void move_down(int array [5][5]) {
   int a,b,c;
 
@@ -148,13 +109,10 @@ void combine_down (int array[5][5]) {
   for(int column =0;column<4;column++) {
     for (int row =3;row>=0;row--) {
       if (row!=0) { 
-
         if (array[row][column] == array [row-1][column]) {
           array[row][column] = array [row][column] * 2;
           array[row-1][column]=0;
         }
-
-
       }
     }
     move_down(array);
@@ -164,16 +122,112 @@ void combine_down (int array[5][5]) {
 
 
 
-//  else {
-//  cout << "Invalid input"<< endl;
-//  }        
+
+
+
+
+void move_left (int array [5][5]) {
+  int a,b,c;
+
+  for (int counter=0;counter<3;counter++) {
+    for ( int row = 0; row <4; row++) {      //loops through the columns
+      for (int column=0; column<4; column++) {        //loops through the rows 
+        if (array [row][column]== 0) {
+          a= array[row][column];
+          b=array[row][column+1];
+          c=b;
+          b=a;
+          a=c;
+          array[row][column]=a;
+          array[row][column+1]=b;
+
+          if (column==3){
+            array[row][column]=0;
+          }
+        }
+      }
+    }
+  }
+ 
+  return;
+}
+
+void combine_left (int array [5][5]) {
+
+
+  for(int row =0;row<4;row++) {
+    for (int column =0;column<4;column++) {
+      if (array[row][column] == array [row][column+1]) {
+        array[row][column] = array [row][column] * 2;
+        array[row][column+1]=0;
+      }
+    }
+    move_left(array);
+  }
+ 
+  return;
+}
 
 
 
 
 
-//  return;
-//}
+
+
+
+
+
+
+
+void move_right(int array [5][5]) {
+  int a,b,c;
+
+  for (int counter=0;counter<3;counter++) {
+    for ( int row = 0; row <4; row++) {      //loops through the columns
+      for (int column=3; column >=0; column--) {        //loops through the rows 
+        if (array [row][column]== 0) {
+          a= array[row][column];
+          b=array[row][column-1];
+          c=b;
+          b=a;
+          a=c;
+          array[row][column]=a;
+          if (column!=0){
+            array[row][column-1]=b;
+          }
+          if (column==0){
+            array[row][column]=0;
+          }
+        }
+      }
+    }
+  }
+ 
+  return;
+}
+
+void combine_right (int array [5][5]) {
+
+  for(int row =0;row<4;row++) {
+    for (int column =3;column>=0;column--) {
+      if (column!=0) { 
+        if (array[row][column] == array [row][column-1]) {
+          array[row][column] = array [row][column] * 2;
+          array[row][column-1]=0;
+        }
+      }
+    }
+    move_right(array);
+  }
+  return;
+}
+
+
+
+
+
+
+
 
 
 void printArray(int array[5][5]) {
@@ -188,19 +242,15 @@ void printArray(int array[5][5]) {
 }
 int main () {
 
-  int tile [5][5]= { {4,2,0,8}, {4,0,0,2},{0,4,0,0},{2,2,0,2}  };
+  int tile [5][5]= { {0,8,4,4}, {0,8,0,8},{8,2,2,2},{2,8,2,2}  };
 
 
-  cout<<"you are moving down"<<endl;
+  cout<<"you are moving left"<<endl;
   printArray(tile);
   cout<<"after move"<<endl;
-  move_down(tile);
-  combine_down(tile);
+  move_left(tile);
+  combine_left(tile);
   printArray(tile);
-//  cout<<"you are moving down"<<endl;
-  
-
-
 
   return 0;
 }
