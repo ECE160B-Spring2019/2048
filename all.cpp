@@ -69,22 +69,9 @@ void board::draw()
         cout<<endl;
 }
 
-//sets value in the array
-void board::set(int row, int col, int number)
-{
-        tile[row][col]=number;
-}
-
-//reads the value in the array
-int board::pull(int row, int col)
-{
-        return tile[row][col];
-}
-
-class check: public board{
+class check: public move{
         int max_value;
-      public:
-        board b; 
+      public: 
         int randomnumber();
         int findempty();
         int win();
@@ -98,14 +85,11 @@ class check: public board{
 //constructor
 check::check()
 {
-        board x;
-        x=b;
-}
-
+       max_value = 0;
+}        
 //copy-constructor
 check::check(check& c)
 {
-        b=c.b;
         max_value=c.max_value;
 }
 
@@ -120,7 +104,7 @@ int check::findempty()
         {
                 for(int ii=0; ii<4; ii++)
                 {
-                        if(b.pull(jj,ii)==0)
+                        if(tile[jj,ii]==0)
                         {  
                                emptyfound[count]=(jj*4)+ii;
                                count++;
@@ -147,7 +131,7 @@ int check::randomnumber()
                 row = space/4;
                 col=space%4;
                 value = rand()%2;
-                value==1 ? b.set(row,col,4) : b.set(row,col,2);
+                value==1 ? (tile[row,col]=4) : (tile[row,col]=2);
          }
          return win(); 
 }
@@ -183,19 +167,40 @@ int check::playagain()
         }
 }
 
-
-
-}
 int main()
 {
-        check c;
-        //something with move
-        int answer = c.randomnumber();
-        //randomnumber inserts a random number in a random spot and also checks if the player won or lost and if they did they ask if they want to play again. 
-        //answer=0
-        //doen't want to play again
-        //answer=1
-        //in middle of the game
-        //answer = 2
-        //wants to play again
+        do{
+                check c;
+                //something with move
+                int answer = c.randomnumber();
+                //randomnumber inserts a random number in a random spot and also checks if the player won or lost and if they did they ask if they want to play again. 
+                //answer=0
+                //doen't want to play again
+                //answer=1
+                //in middle of the game
+                //answer = 2
+                //wants to play again
+                do{
+                        string s;
+                        if(s=="w" || s="W"){
+                                move_up(tile);
+                                compine_up(tile);
+                                answer=randomnumber();
+                        }else if(s=="s" || s=="S"){
+                                move_down(tile);
+                                compine_down(tile); 
+                                answer=randomnumber();
+                        }else if(s=="a" || s=="A"){
+                                move_left(tile);
+                                compine_left(tile);
+                                answer=randomnumber();
+                        }else if(s=="d" || s=="D"){
+                                move_right(tile);
+                                compine_right(tile);
+                                answer=randomnumber();
+                        }else{
+                                cout<<"Choice is invaild, please pick W, S, A, or D."<<endl;
+                        }
+                }while(answer==1)
+        }while(answer==2)
 }
