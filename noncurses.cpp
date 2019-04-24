@@ -350,15 +350,15 @@ int check::win()
 
 int check::playagain()
 {
-        char answer;
+        string answer;
         cout<<"Do you want to play again? (y or n)"<<endl;
         do{
                 cin>>answer;
-        }while(answer!='Y' && answer!='y' && answer!='N' && answer!='n');      
-        if(answer=='Y' || answer=='y')
+        }while(answer!="Y" && answer!="y" && answer!="N" && answer!="n");      
+        if(answer=="Y" || answer=="y")
         {
                 return 2;
-        }else if(answer=='N' || answer=='n'){
+        }else if(answer=="N" || answer=="n"){
                 return 0;
         }
 }
