@@ -183,6 +183,9 @@ int check::playagain()
         }
 }
 
+
+
+}
 int main()
 {
         check c;
