@@ -26,6 +26,9 @@ class move : public board {
 // cin>>user_vertical_input;
 //  if (user_vertical_input == "w") {
 
+
+int max_value=0;
+
 void move_up(int array [5][5]){
   int counter;
   int a,b,c;
@@ -58,13 +61,15 @@ void combine_up (int array [5][5]) {
       if (array[row][column] == array [row+1][column]) {
         array[row][column] = array [row][column] * 2;
         array[row+1][column]=0;
+        if (array[row][column] > max_value) {
+          max_value= array[row][column];
+        }
       }
     }
     move_up(array);
   }
   return; 
 }
-
 
 //  else if (user_vertical_input == "s") {
 void move_down(int array [5][5]) {
@@ -93,7 +98,6 @@ void move_down(int array [5][5]) {
   return;
 }
 
-
 void combine_down (int array[5][5]) {
   for(int column =0;column<4;column++) {
     for (int row =3;row>=0;row--) {
@@ -101,6 +105,9 @@ void combine_down (int array[5][5]) {
         if (array[row][column] == array [row-1][column]) {
           array[row][column] = array [row][column] * 2;
           array[row-1][column]=0;
+          if (array[row][column] > max_value) {
+            max_value= array[row][column];
+          }
         }
       }
     }
@@ -108,7 +115,6 @@ void combine_down (int array[5][5]) {
   }
   return;
 }
-
 
 void move_left (int array [5][5]) {
   int a,b,c;
@@ -142,6 +148,9 @@ void combine_left (int array [5][5]) {
       if (array[row][column] == array [row][column+1]) {
         array[row][column] = array [row][column] * 2;
         array[row][column+1]=0;
+        if (array[row][column] > max_value) {
+          max_value= array[row][column];
+        }
       }
     }
     move_left(array);
@@ -149,12 +158,6 @@ void combine_left (int array [5][5]) {
  
   return;
 }
-
-
-
-
-
-
 
 void move_right(int array [5][5]) {
   int a,b,c;
@@ -191,6 +194,9 @@ void combine_right (int array [5][5]) {
         if (array[row][column] == array [row][column-1]) {
           array[row][column] = array [row][column] * 2;
           array[row][column-1]=0;
+          if (array[row][column] > max_value) {
+            max_value= array[row][column];
+          }
         }
       }
     }
@@ -201,12 +207,7 @@ void combine_right (int array [5][5]) {
 
 
 
-
-
-
-
-
-
+/*
 void printArray(int array[5][5]) {
   for (int i = 0;i<4;i++) {
     for (int j = 0; j<4;j++) {
@@ -231,3 +232,5 @@ int main () {
 
   return 0;
 }
+
+*/
