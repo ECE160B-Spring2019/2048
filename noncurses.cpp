@@ -271,6 +271,7 @@ class check: public move{
         int randomnumber();
         int findempty();
         int win();
+        int possiblemoves();
         int playagain();
         check();
         ~check(){}
@@ -318,6 +319,25 @@ int check::findempty()
         return emptyfound[end]+1;
 }
 
+int check::possiblemoves()
+{
+         for(int jj=0; jj<4; jj++)
+         {
+                 for(int ii=0; ii<4; ii++)
+                 {
+                         if(tile[jj][ii]==tile[jj][ii+1])
+                         {
+                                 return 1;
+                         }
+                         else if(tile[jj][ii]==tile[jj+1][ii])
+                         {
+                                 return 1;
+                         }
+                 }
+         }
+         return 0;
+}
+
 //checks for empty space and then inserts a 2 or 4 there, then checks in the player won or lost yet.
 int check::randomnumber()
 {
@@ -339,7 +359,7 @@ int check::win()
         if(max_value==2048){
                  cout<<"You won!!!"<<endl;
                  end = playagain();
-        }else if(findempty()==0){
+        }else if(findempty()==0 && possiblemoves()==0){
                 cout<<"You lose, you loser!"<<endl;
                 end=playagain();
         }else{
