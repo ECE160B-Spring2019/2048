@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <string>
+#include <ncurses.h>
 using namespace std;
 
 class board{
@@ -43,7 +44,7 @@ void board::initialize()
 //prints the board out
 void board::draw()
 {
-        cout<<"*********************"<<endl;
+        cout<<"*************************"<<endl;
         for(int jj=0; jj<4; jj++)
         {
                 cout<<"*";
@@ -64,7 +65,7 @@ void board::draw()
                                 cout<<"     *";
                         }
                 }
-        cout<<endl<<"*********************"<<endl;                   
+        cout<<endl<<"*************************"<<endl;                   
         } 
         cout<<endl;
 }
@@ -365,6 +366,10 @@ int check::playagain()
 
 int main()
 {
+        intitscr();
+        cbreak();
+        noecho();
+
         int answer;
         do{
                 check c;
@@ -401,4 +406,6 @@ int main()
                         }
                 }while(answer==1);
         }while(answer==2); 
+        
+        endwin();
 }
