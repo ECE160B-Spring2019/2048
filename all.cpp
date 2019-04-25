@@ -44,6 +44,7 @@ void board::initialize()
 //prints the board out
 void board::draw()
 {
+        clear();
         printw("*************************\n"); 
         for(int jj=0; jj<4; jj++)
         {
@@ -354,17 +355,16 @@ int check::win()
 
 int check::playagain()
 {
-        char *answer;
+        char answer;
         printw("Do you want to play again? (y or n)\n");
         refresh();
         do{
-                getstr(answer);
-                getch();
-        }while(*answer!='Y' && *answer!='y' && *answer!='N' && *answer!='n');  
-        if(*answer=='Y' || *answer=='y')
+                answer=getch();
+        }while(answer!='Y' && answer!='y' && answer!='N' && answer!='n');  
+        if(answer=='Y' || answer=='y')
         {
                 return 2;
-        }else if(*answer=='N' || *answer=='n'){
+        }else if(answer=='N' || answer=='n'){
                 return 0;
         }
 }
@@ -388,22 +388,21 @@ int main()
                 //answer = 2
                 //wants to play again
                 do{
-                        char *s;
-                        getstr(s);
-                        getch();
-                        if(*s=='w' || *s=='W'){
+                        char s;
+                        s=getch();
+                        if(s=='w' || s=='W'){
                                 c.move_up(c.tile);
                                 c.combine_up(c.tile);
                                 answer=c.randomnumber();
-                        }else if(*s=='s' || *s=='S'){
+                        }else if(s=='s' || s=='S'){
                                 c.move_down(c.tile);
                                 c.combine_down(c.tile); 
                                 answer=c.randomnumber();
-                        }else if(*s=='a' || *s=='A'){
+                        }else if(s=='a' || s=='A'){
                                 c.move_left(c.tile);
                                 c.combine_left(c.tile);
                                 answer=c.randomnumber();
-                        }else if(*s=='d' || *s=='D'){
+                        }else if(s=='d' || s=='D'){
                                 c.move_right(c.tile);
                                 c.combine_right(c.tile);
                                 answer=c.randomnumber();
@@ -411,8 +410,9 @@ int main()
                                 printw("Choice is invaild, please pick W, S, A, or D.\n");
                                 refresh();
                         }
-                        clear();
+                        refresh();
                 }while(answer==1);
+                clear();
         }while(answer==2); 
         endwin();
         return 0;
