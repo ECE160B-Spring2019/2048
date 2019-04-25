@@ -35,10 +35,9 @@ void board::initialize()
                 }
         }
         first_pos=rand()%16;
-        first_value=rand()%2;
         row=first_pos/4;
         col=first_pos%4;
-        first_value==0 ? tile[row][col]=2 : tile[row][col]=4;
+        tile[row][col]=2;
 }
 
 //prints the board out
@@ -349,8 +348,7 @@ int check::randomnumber()
                 space --;
                 row = space/4;
                 col=space%4;
-                value = rand()%2;
-                value==1 ? (tile[row][col]=4) : (tile[row][col]=2);
+                tile[row][col]=2;
          }
          return win(); 
 }
@@ -392,6 +390,7 @@ int check::playagain()
 int main()
 {
         initscr();
+        keypad(stdscr, TRUE);
         cbreak();
         noecho();
 
@@ -408,26 +407,31 @@ int main()
                 //answer = 2
                 //wants to play again
                 do{
-                        char s;
+                        int s;
                         s=getch();
-                        if(s=='w' || s=='W'){
+                        switch(s){
+                        case KEY_UP:
                                 c.move_up(c.tile);
                                 c.combine_up(c.tile);
                                 answer=c.randomnumber();
-                        }else if(s=='s' || s=='S'){
+                                break;
+                        case KEY_DOWN:
                                 c.move_down(c.tile);
                                 c.combine_down(c.tile); 
                                 answer=c.randomnumber();
-                        }else if(s=='a' || s=='A'){
+                                break;
+                        case KEY_LEFT:
                                 c.move_left(c.tile);
                                 c.combine_left(c.tile);
                                 answer=c.randomnumber();
-                        }else if(s=='d' || s=='D'){
+                                break;
+                        case KEY_RIGHT:
                                 c.move_right(c.tile);
                                 c.combine_right(c.tile);
                                 answer=c.randomnumber();
-                        }else{
-                                printw("Choice is invaild, please pick W, S, A, or D.\n");
+                                break;
+                        default:
+                                printw("Choice is invaild, please use arrow keys.\n");
                                 refresh();
                         }
                         refresh();
