@@ -274,6 +274,7 @@ class check: public move{
         int randomnumber();
         int findempty();
         int win();
+        int possiblemoves();
         int playagain();
         check();
         ~check(){}
@@ -290,6 +291,25 @@ check::check()
 check::check(check& c)
 {
        
+}
+
+int check::possiblemoves()
+{
+         for(int jj=0; jj<4; jj++)
+         {
+                 for(int ii=0; ii<4; ii++)
+                 {
+                         if(tile[jj][ii]==tile[jj][ii+1])
+                         {
+                                 return 1;
+                         }
+                         else if(tile[jj][ii]==tile[jj+1][ii])
+                         {
+                                 return 1;
+                         }
+                 }
+         }
+         return 0;
 }
 
 //finds any empty space
@@ -343,7 +363,7 @@ int check::win()
                  printw("You won!!!\n");
                  refresh();
                  end = playagain();
-        }else if(findempty()==0){
+        }else if(findempty()==0 && possiblemoves()==0){
                 printw("You lose, you loser!\n");
                 refresh();
                 end=playagain();
