@@ -44,30 +44,31 @@ void board::initialize()
 //prints the board out
 void board::draw()
 {
-        cout<<"*************************"<<endl;
+        printw("*************************\n"); 
         for(int jj=0; jj<4; jj++)
         {
-                cout<<"*";
+                printw("*");
                 for(int ii=0; ii<4; ii++)
                 {
                         if(tile[jj][ii]!=0){
                                 if(tile[jj][ii]<10){
-                                        cout<<"   "<<tile[jj][ii]<<" *";
+                                        printw("   %d *",tile[jj][ii]);
                                 }else if(tile[jj][ii]<100){
-                                        cout<<"  "<<tile[jj][ii]<<" *";
+                                        printw("  %d *",tile[jj][ii]);
                                 }else if(tile[jj][ii]<1000){
-                                        cout<<tile[jj][ii]<<" *";
+                                        printw("%d *",tile[jj][ii]);
                                 }else{
-                                        cout<<tile[jj][ii]<<"*";
+                                        printw("%d*",tile[jj][ii]);
                                 }
 
                         }else{
-                                cout<<"     *";
+                                printw("     *");
                         }
                 }
-        cout<<endl<<"*************************"<<endl;                   
+        printw("\n*************************\n");                   
         } 
-        cout<<endl;
+        printw("\n");
+        refresh();
 }
 
 class move: public board{
@@ -338,10 +339,12 @@ int check::win()
         int end;
         draw(); 
         if(max_value==2048){
-                 cout<<"You won!!!"<<endl;
+                 printw("You won!!!\n");
+                 refresh();
                  end = playagain();
         }else if(findempty()==0){
-                cout<<"You lose, you loser!"<<endl;
+                printw("You lose, you loser!\n");
+                refresh();
                 end=playagain();
         }else{
                  end = 1;
@@ -351,22 +354,24 @@ int check::win()
 
 int check::playagain()
 {
-        char answer;
-        cout<<"Do you want to play again? (y or n)"<<endl;
+        char *answer;
+        printw("Do you want to play again? (y or n)\n");
+        refresh();
         do{
-                cin>>answer;
-        }while(answer!='Y' && answer!='y' && answer!='N' && answer!='n');      
-        if(answer=='Y' || answer=='y')
+                getstr(answer);
+                getch();
+        }while(*answer!='Y' && *answer!='y' && *answer!='N' && *answer!='n');  
+        if(*answer=='Y' || *answer=='y')
         {
                 return 2;
-        }else if(answer=='N' || answer=='n'){
+        }else if(*answer=='N' || *answer=='n'){
                 return 0;
         }
 }
 
 int main()
 {
-        intitscr();
+        initscr();
         cbreak();
         noecho();
 
@@ -383,29 +388,32 @@ int main()
                 //answer = 2
                 //wants to play again
                 do{
-                        string s;
-                        cin>>s;
-                        if(s=="w" || s=="W"){
+                        char *s;
+                        getstr(s);
+                        getch();
+                        if(*s=='w' || *s=='W'){
                                 c.move_up(c.tile);
                                 c.combine_up(c.tile);
                                 answer=c.randomnumber();
-                        }else if(s=="s" || s=="S"){
+                        }else if(*s=='s' || *s=='S'){
                                 c.move_down(c.tile);
                                 c.combine_down(c.tile); 
                                 answer=c.randomnumber();
-                        }else if(s=="a" || s=="A"){
+                        }else if(*s=='a' || *s=='A'){
                                 c.move_left(c.tile);
                                 c.combine_left(c.tile);
                                 answer=c.randomnumber();
-                        }else if(s=="d" || s=="D"){
+                        }else if(*s=='d' || *s=='D'){
                                 c.move_right(c.tile);
                                 c.combine_right(c.tile);
                                 answer=c.randomnumber();
                         }else{
-                                cout<<"Choice is invaild, please pick W, S, A, or D."<<endl;
+                                printw("Choice is invaild, please pick W, S, A, or D.\n");
+                                refresh();
                         }
+                        clear();
                 }while(answer==1);
         }while(answer==2); 
-        
         endwin();
+        return 0;
 }
