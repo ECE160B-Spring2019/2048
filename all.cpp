@@ -56,7 +56,7 @@ void board::draw()
                                 }else if(tile[jj][ii]<100){
                                         printw("  %d *",tile[jj][ii]);
                                 }else if(tile[jj][ii]<1000){
-                                        printw("%d *",tile[jj][ii]);
+                                        printw(" %d *",tile[jj][ii]);
                                 }else{
                                         printw("%d*",tile[jj][ii]);
                                 }
@@ -75,23 +75,24 @@ class move: public board{
      protected:
         int max_value;
      public:
-        void move_up(int array[5][5]);
-        void move_down(int array[5][5]);
-        void move_left(int array[5][5]);
-        void move_right(int array[5][5]);
-        void combine_up(int array[5][5]);
-        void combine_down(int array[5][5]);
-        void combine_left(int array[5][5]);
-        void combine_right(int array[5][5]);
+        int move_up(int array[5][5]);
+        int move_down(int array[5][5]);
+        int move_left(int array[5][5]);
+        int move_right(int array[5][5]);
+        int combine_up(int array[5][5]);
+        int combine_down(int array[5][5]);
+        int combine_left(int array[5][5]);
+        int combine_right(int array[5][5]);
         move(){max_value=0;}
         ~move(){}
         move& operator=(move& o){}
         move(move& o){}
 };
 
-void move::move_up(int array [5][5]){
+int move::move_up(int array [5][5]){
   int counter;
   int a,b,c;
+  int moved=0;
 
   for (int counter=0;counter<3;counter++) {             //this cycles for 3 times to ensure that all the values are moved up
     for ( int column = 0; column < 4; column++) {      //loops through the columns
@@ -104,6 +105,9 @@ void move::move_up(int array [5][5]){
           a=c;
           array[row][column]=a;
           array[row+1][column]=b;
+        if(a!=0){  
+          moved = 1;
+        }
         if (row==3){                               //if you are at the last row then set the value equal to 0 or blank 
           array[row][column]=0;
     //      array[row+1][column]=-1;
@@ -112,28 +116,32 @@ void move::move_up(int array [5][5]){
       }
     }
   }
-  return;
+  return moved;
 }
 
-void move::combine_up (int array [5][5]) {
+int move::combine_up (int array [5][5]) {
+  int moved, combined;
+  combined=0;
   for(int column =0;column<4;column++) {
     for (int row =0;row<4;row++) {
       if (array[row][column] == array [row+1][column]) {
         array[row][column] = array [row][column] * 2;
         array[row+1][column]=0;
+        combined=1;
         if (array[row][column] > max_value) {
           max_value= array[row][column];
         }
       }
     }
-    move_up(array);
+    moved=move_up(array);
   }
-  return; 
+  return (moved==1 || combined==1) ? 1 : 0; 
 }
 
 //  else if (user_vertical_input == "s") {
-void move::move_down(int array [5][5]) {
+int move::move_down(int array [5][5]) {
   int a,b,c;
+  int moved=0;
 
   for (int counter=0;counter<3;counter++) {
     for ( int column = 0; column <4; column++) {      //loops through the columns
@@ -145,6 +153,9 @@ void move::move_down(int array [5][5]) {
           b=a;
           a=c;
           array[row][column]=a;
+          if(a!=0){
+                moved=1;
+          }
           if (row!=0){
             array[row-1][column]=b;
           }
@@ -155,29 +166,33 @@ void move::move_down(int array [5][5]) {
       }
     }
   }
-  return;
+  return moved;
 }
 
-void move::combine_down (int array[5][5]) {
+int move::combine_down (int array[5][5]) {
+  int combined,moved;
+  combined=0;
   for(int column =0;column<4;column++) {
     for (int row =3;row>=0;row--) {
       if (row!=0) { 
         if (array[row][column] == array [row-1][column]) {
           array[row][column] = array [row][column] * 2;
           array[row-1][column]=0;
+          combined=1;
           if (array[row][column] > max_value) {
             max_value= array[row][column];
           }
         }
       }
     }
-    move_down(array);
+    moved = move_down(array);
   }
-  return;
+  return (moved==1||combined==1) ? 1 : 0;
 }
 
-void move::move_left (int array [5][5]) {
+int move::move_left (int array [5][5]) {
   int a,b,c;
+  int moved=0;
 
   for (int counter=0;counter<3;counter++) {
     for ( int row = 0; row <4; row++) {      //loops through the columns
@@ -190,7 +205,9 @@ void move::move_left (int array [5][5]) {
           a=c;
           array[row][column]=a;
           array[row][column+1]=b;
-
+          if(a!=0){
+                moved=1;
+          }
           if (column==3){
             array[row][column]=0;
           }
@@ -199,29 +216,32 @@ void move::move_left (int array [5][5]) {
     }
   }
  
-  return;
+  return moved;
 }
 
-void move::combine_left (int array [5][5]) {
+int move::combine_left (int array [5][5]) {
+  int moved, combined;
+  combined=0;
   for(int row =0;row<4;row++) {
     for (int column =0;column<4;column++) {
       if (array[row][column] == array [row][column+1]) {
         array[row][column] = array [row][column] * 2;
         array[row][column+1]=0;
+        combined=1;
         if (array[row][column] > max_value) {
           max_value= array[row][column];
         }
       }
     }
-    move_left(array);
+    moved=move_left(array);
   }
- 
-  return;
+  return (moved==1||combined==1) ? 1 : 0;
 }
 
-void move::move_right(int array [5][5]) {
+int move::move_right(int array [5][5]) {
   int a,b,c;
-
+  int moved=0; 
+       
   for (int counter=0;counter<3;counter++) {
     for ( int row = 0; row <4; row++) {      //loops through the columns
       for (int column=3; column >=0; column--) {        //loops through the rows 
@@ -231,6 +251,9 @@ void move::move_right(int array [5][5]) {
           c=b;
           b=a;
           a=c;
+          if(a!=0){
+                  moved=1;
+          }
           array[row][column]=a;
           if (column!=0){
             array[row][column-1]=b;
@@ -243,26 +266,28 @@ void move::move_right(int array [5][5]) {
     }
   }
  
-  return;
+  return moved;
 }
 
-void move::combine_right (int array [5][5]) {
-
+int move::combine_right (int array [5][5]) {
+  int moved, combined;
+  combined=0;
   for(int row =0;row<4;row++) {
     for (int column =3;column>=0;column--) {
       if (column!=0) { 
         if (array[row][column] == array [row][column-1]) {
           array[row][column] = array [row][column] * 2;
           array[row][column-1]=0;
+          combined=1;
           if (array[row][column] > max_value) {
             max_value= array[row][column];
           }
         }
       }
     }
-    move_right(array);
+    moved=move_right(array);
   }
-  return;
+  return (moved==1||combined==1) ? 1 : 0;
 }
 
 
@@ -394,7 +419,7 @@ int main()
         cbreak();
         noecho();
 
-        int answer;
+        int answer, valid;
         do{
                 check c;
                 //something with move
@@ -408,27 +433,44 @@ int main()
                 //wants to play again
                 do{
                         int s;
+                        valid=0;
                         s=getch();
                         switch(s){
                         case KEY_UP:
                                 c.move_up(c.tile);
-                                c.combine_up(c.tile);
-                                answer=c.randomnumber();
+                                valid = c.combine_up(c.tile);
+                                if(valid==1){ 
+                                        answer=c.randomnumber();
+                                }else{
+                                        answer=c.win();
+                                }
                                 break;
                         case KEY_DOWN:
                                 c.move_down(c.tile);
-                                c.combine_down(c.tile); 
-                                answer=c.randomnumber();
+                                valid = c.combine_down(c.tile);
+                                if(valid==1){ 
+                                        answer=c.randomnumber();
+                                }else{
+                                        answer=c.win();        
+                                }
                                 break;
                         case KEY_LEFT:
                                 c.move_left(c.tile);
-                                c.combine_left(c.tile);
-                                answer=c.randomnumber();
+                                valid = c.combine_left(c.tile);
+                                if(valid==1){
+                                        answer=c.randomnumber();
+                                }else{
+                                        answer=c.win();
+                                }
                                 break;
                         case KEY_RIGHT:
                                 c.move_right(c.tile);
-                                c.combine_right(c.tile);
-                                answer=c.randomnumber();
+                                valid = c.combine_right(c.tile);
+                                if(valid==1){
+                                        answer=c.randomnumber();
+                                }else{
+                                        answer = c.win();
+                                }
                                 break;
                         default:
                                 printw("Choice is invaild, please use arrow keys.\n");
