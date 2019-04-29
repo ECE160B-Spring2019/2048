@@ -186,9 +186,9 @@ int move::combine_down (int array[5][5]) {
         }
       }
     }
-    moved = move_down(array);
+    move_down(array);
   }
-  return (moved==1||combined==1) ? 1 : 0;
+  return combined;
 }
 
 int move::move_left (int array [5][5]) {
@@ -234,9 +234,9 @@ int move::combine_left (int array [5][5]) {
         }
       }
     }
-    moved=move_left(array);
+    move_left(array);
   }
-  return (moved==1||combined==1) ? 1 : 0;
+  return combined;
 }
 
 int move::move_right(int array [5][5]) {
@@ -286,9 +286,9 @@ int move::combine_right (int array [5][5]) {
         }
       }
     }
-    moved=move_right(array);
+    move_right(array);
   }
-  return (moved==1||combined==1) ? 1 : 0;
+  return combined;
 }
 
 
@@ -420,7 +420,7 @@ int main()
         cbreak();
         noecho();
 
-        int answer, valid;
+        int answer, vmove, vcombine;
         do{
                 check c;
                 //something with move
@@ -434,40 +434,41 @@ int main()
                 //wants to play again
                 do{
                         int s;
-                        valid=0;
+                        vmove=0;
+                        vcombine=0;
                         s=getch();
                         switch(s){
                         case KEY_UP:
-                                c.move_up(c.tile);
-                                valid = c.combine_up(c.tile);
-                                if(valid==1){ 
+                                vmove=c.move_up(c.tile);
+                                vcombine=c.combine_up(c.tile);
+                                if(vmove || vcombine){ 
                                         answer=c.randomnumber();
                                 }else{
                                         answer=c.win();
                                 }
                                 break;
                         case KEY_DOWN:
-                                c.move_down(c.tile);
-                                valid = c.combine_down(c.tile);
-                                if(valid==1){ 
+                                vmove = c.move_down(c.tile);
+                                vcombine = c.combine_down(c.tile);
+                                if(vmove || vcombine){ 
                                         answer=c.randomnumber();
                                 }else{
                                         answer=c.win();        
                                 }
                                 break;
                         case KEY_LEFT:
-                                c.move_left(c.tile);
-                                valid = c.combine_left(c.tile);
-                                if(valid==1){
+                                vmove=c.move_left(c.tile);
+                                vcombine= c.combine_left(c.tile);
+                                if(vmove || vcombine){
                                         answer=c.randomnumber();
                                 }else{
                                         answer=c.win();
                                 }
                                 break;
                         case KEY_RIGHT:
-                                c.move_right(c.tile);
-                                valid = c.combine_right(c.tile);
-                                if(valid==1){
+                                vmove=c.move_right(c.tile);
+                                vcombine= c.combine_right(c.tile);
+                                if(vmove==1||vcombine==1){
                                         answer=c.randomnumber();
                                 }else{
                                         answer = c.win();
