@@ -1,6 +1,5 @@
 #include "header.h"
 #include "check.h"
-#include "move.h"
 using namespace std;
 
 //constructor

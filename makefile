@@ -12,7 +12,7 @@ board.o: board.cpp board.h header.h
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ 
 # This will compile move.cpp
 move.o: move.cpp move.h header.h
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
+  $(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
 
 # This will compile check.cpp
 check.o: check.cpp check.h header.h

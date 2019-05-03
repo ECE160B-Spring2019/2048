@@ -1,4 +1,6 @@
-#include<header.h>
+#include "header.h"
+#include "move.h"
+
 using namespace std;
 
 int move::move_up(int array [5][5]){
