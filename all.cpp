@@ -20,7 +20,7 @@ class board{                              //this class contains everything that 
 //copy constructor
 board::board(board& b)
 {
-        memcpy(tile, b.tile, sizeof(tile));
+        memcpy(tile, b.tile, sizeof(tile));             //copys the values of b to it board
 }
 
 //sets all values in the array to zero
@@ -34,24 +34,24 @@ void board::initialize()
                         tile[jj][ii]=0;      //sets all the tiles to 0 
                 }
         }
-        first_pos=rand()%16;
+        first_pos=rand()%16;            //picks a random postion
         row=first_pos/4;
         col=first_pos%4;
-        tile[row][col]=2;
+        tile[row][col]=2;               //inserts a 2 in that spot
 }
 
 //prints the board out
 void board::draw()
 {
-        clear();
-        printw("*************************\n"); 
+        clear();                //clear old board out
+        printw("*************************\n");          //prints the boarder of the board 
         for(int jj=0; jj<4; jj++)
         {
                 printw("*");
-                for(int ii=0; ii<4; ii++)
+                for(int ii=0; ii<4; ii++)               //prints the diffrent values of the board
                 {
                         if(tile[jj][ii]!=0){
-                                if(tile[jj][ii]<10){
+                                if(tile[jj][ii]<10){            //each number prints diffrent number of spaces
                                         printw("   %d *",tile[jj][ii]);
                                 }else if(tile[jj][ii]<100){
                                         printw("  %d *",tile[jj][ii]);
@@ -65,10 +65,10 @@ void board::draw()
                                 printw("     *");
                         }
                 }
-        printw("\n*************************\n");                   
+        printw("\n*************************\n");                   //prints boarder of the board
         } 
         printw("\n");
-        refresh();
+        refresh();              //loard the bpard onto the window
 }
 
 class move: public board{                       //this class deals with the movements of the game. it includes moving/swapping and combining
@@ -83,10 +83,10 @@ class move: public board{                       //this class deals with the move
         int combine_down(int array[5][5]);
         int combine_left(int array[5][5]);
         int combine_right(int array[5][5]);
-        move(){max_value=0;}
-        ~move(){}
-        move& operator=(move& o){}
-        move(move& o){}
+        move(){max_value=0;}    //constructor
+        ~move(){}       //deconstructor
+        move& operator=(move& o){} //assignment overload
+        move(move& o){} //copy constructor
 };
 
 int move::move_up(int array [5][5]){                 //overall, this function moves all the numbers up if user chooses the option to
@@ -298,22 +298,11 @@ class check: public move{
         int win();
         int possiblemoves();
         int playagain();
-        check();
-        ~check(){}
-        check& operator=(check& c){max_value=c.max_value;}
-        check(check& c);
+        check(){}                //constructor
+        ~check(){}              //deconstructor
+        check& operator=(check& c){max_value=c.max_value;}      //assignment overload
+        check(check& c){}        //copy-constructor        
 };
-
-//constructor
-check::check()
-{
-       
-}        
-//copy-constructor
-check::check(check& c)
-{
-       
-}
 
 int check::possiblemoves()
 {
@@ -321,11 +310,11 @@ int check::possiblemoves()
          {
                  for(int ii=0; ii<4; ii++)
                  {
-                         if(tile[jj][ii]==tile[jj][ii+1])
+                         if(tile[jj][ii]==tile[jj][ii+1])       //checks if two ajacent numbers in a column are the same
                          {
                                  return 1;
                          }
-                         else if(tile[jj][ii]==tile[jj+1][ii])
+                         else if(tile[jj][ii]==tile[jj+1][ii]) //checks if two ajacent numbers in a row are the same
                          {
                                  return 1;
                          }
@@ -347,17 +336,17 @@ int check::findempty()
                 {
                         if(tile[jj][ii]==0)           //the tile is empty if it equals 0. if it is true, then an empty tile is found
                         {  
-                               emptyfound[count]=(jj*4)+ii;
+                               emptyfound[count]=(jj*4)+ii;     //stores all postions that are empty 
                                count++;
                         }
                 }
         }
 
-        if(count==0)
+        if(count==0)    //no empty spots were found
         {
                 return 0;
         }
-        end = rand()%(count);
+        end = rand()%(count);   //picks a random postion in the array of empty postions
 
         //Returns value of the empty space +1 to diffrent between the space and zero.
         return emptyfound[end]+1;
@@ -367,13 +356,13 @@ int check::findempty()
 int check::randomnumber()
 {
         int space, row, col, value;
-        if((space=findempty())!=0){
+        if((space=findempty())!=0){     //checks that there is a empty spot
                 space --;
                 row = space/4;
                 col=space%4;
-                tile[row][col]=2;
+                tile[row][col]=2;       //puts a 2 in the random spot
          }
-         return win(); 
+         return win();          //calls win
 }
 
 int check::win()
@@ -413,9 +402,9 @@ int check::playagain()                                       //this function pro
 int main()
 {
         initscr();
-        keypad(stdscr, TRUE);
-        cbreak();
-        noecho();
+        keypad(stdscr, TRUE);           //allows the use of the arrow keys
+        cbreak();               
+        noecho();                       //no echo in the board
 
         int answer, vmove, vcombine;
         do{
@@ -463,12 +452,12 @@ int main()
                                 break;
                         default:
                                 printw("Choice is invaild, please use arrow keys.\n");        //if the user does not enter a valid key, then prompt an error message
-                                refresh();
+                                refresh();      //prints to board
                         }
                         refresh();
-                }while(answer==1);
-                clear();
-        }while(answer==2); 
-        endwin();
+                }while(answer==1);      //while the player neither lost or won
+                clear();        //game ended board is cleared
+        }while(answer==2);      //while player chooses to play again
+        endwin();               //window is closed
         return 0;
 }
