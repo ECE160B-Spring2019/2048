@@ -126,9 +126,11 @@ int move::combine_up (int array [5][5]) {
   for(int column =0;column<4;column++) {
     for (int row =0;row<4;row++) {
       if (array[row][column] == array [row+1][column]) {
+        if(array[row][column]!=0){
+                combined=1;
+        }
         array[row][column] = array [row][column] * 2;
         array[row+1][column]=0;
-        combined=1;
         if (array[row][column] > max_value) {
           max_value= array[row][column];
         }
@@ -146,17 +148,17 @@ int move::move_down(int array [5][5]) {
 
   for (int counter=0;counter<3;counter++) {
     for ( int column = 0; column <4; column++) {      //loops through the columns
-      for (int row=3; row >=0; row--) {        //loops through the rows 
+      for (int row=3; row >0; row--) {        //loops through the rows 
         if (array [row][column]== 0) {
           a= array[row][column];
           b=array[row-1][column];
+          if(b!=0){
+                  moved=1;
+          }
           c=b;
           b=a;
           a=c;
           array[row][column]=a;
-          if(a!=0){
-                moved=1;
-          }
           if (row!=0){
             array[row-1][column]=b;
           }
@@ -177,9 +179,11 @@ int move::combine_down (int array[5][5]) {
     for (int row =3;row>=0;row--) {
       if (row!=0) { 
         if (array[row][column] == array [row-1][column]) {
+          if(array[row][column]!=0){
+                  combined=1;
+          }      
           array[row][column] = array [row][column] * 2;
           array[row-1][column]=0;
-          combined=1;
           if (array[row][column] > max_value) {
             max_value= array[row][column];
           }
@@ -226,9 +230,11 @@ int move::combine_left (int array [5][5]) {
   for(int row =0;row<4;row++) {
     for (int column =0;column<4;column++) {
       if (array[row][column] == array [row][column+1]) {
+        if(array[row][column]!=0){
+                combined=1;
+        }
         array[row][column] = array [row][column] * 2;
         array[row][column+1]=0;
-        combined=1;
         if (array[row][column] > max_value) {
           max_value= array[row][column];
         }
@@ -245,16 +251,16 @@ int move::move_right(int array [5][5]) {
        
   for (int counter=0;counter<3;counter++) {
     for ( int row = 0; row <4; row++) {      //loops through the columns
-      for (int column=3; column >=0; column--) {        //loops through the rows 
+      for (int column=3; column >0; column--) {        //loops through the rows 
         if (array [row][column]== 0) {
           a= array[row][column];
           b=array[row][column-1];
+          if(b!=0){
+                  moved=1;
+          }
           c=b;
           b=a;
           a=c;
-          if(a!=0){
-                  moved=1;
-          }
           array[row][column]=a;
           if (column!=0){
             array[row][column-1]=b;
@@ -277,9 +283,11 @@ int move::combine_right (int array [5][5]) {
     for (int column =3;column>=0;column--) {
       if (column!=0) { 
         if (array[row][column] == array [row][column-1]) {
+          if(array[row][column]!=0){
+                  combined=1;
+          }
           array[row][column] = array [row][column] * 2;
           array[row][column-1]=0;
-          combined=1;
           if (array[row][column] > max_value) {
             max_value= array[row][column];
           }
@@ -434,14 +442,14 @@ int main()
                 //wants to play again
                 do{
                         int s;
-                        vmove=0;
-                        vcombine=0;
+                       // vmove;
+                        //vcombine;
                         s=getch();
                         switch(s){
                         case KEY_UP:
                                 vmove=c.move_up(c.tile);
                                 vcombine=c.combine_up(c.tile);
-                                if(vmove || vcombine){ 
+                                if(vmove==1 || vcombine==1){ 
                                         answer=c.randomnumber();
                                 }else{
                                         answer=c.win();
