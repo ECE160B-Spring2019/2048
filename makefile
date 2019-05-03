@@ -1,11 +1,11 @@
 # Definitions for constants
-CXX=g++
-CXXFLAGS=-I.
+CC=g++
+CFLAGS=-I.
 LDFLAGS=-lncurses
 
 # This will create your final output using .o compiled files
 make:  main.o board.o check.o move.o
-	$(CXX) -o main board.o move.o check.o main.o $(CXXFLAGS) $(LDFLAGS) 
+	$(CXX) -o 2048 board.o move.o check.o main.o $(CXXFLAGS) $(LDFLAGS) 
 
 # This will compile board.cpp
 board.o: board.cpp board.h header.h
