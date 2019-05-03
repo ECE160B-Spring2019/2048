@@ -1,29 +1,33 @@
-class check: public board{
-        int max_value;
-      public:
-        board b; 
-        int randomnumber();
-        int findempty();
-        int win();
-        int playagain();
-        check();
-        ~check(){}
-        check& operator=(check& c){max_value=c.max_value;}
-        check(check& c);
-};
+#include "header.h"
+#include "check.h"
+#include "move.h"
+using namespace std;
 
 //constructor
 check::check()
-{
-        board x;
-        x=b;
-}
-
+{}
+        
 //copy-constructor
 check::check(check& c)
+{}
+
+int check::possiblemoves()
 {
-        b=c.b;
-        max_value=c.max_value;
+         for(int jj=0; jj<4; jj++)
+         {
+                 for(int ii=0; ii<4; ii++)
+                 {
+                         if(tile[jj][ii]==tile[jj][ii+1])
+                         {
+                                 return 1;
+                         }
+                         else if(tile[jj][ii]==tile[jj+1][ii])
+                         {
+                                 return 1;
+                         }
+                 }
+         }
+         return 0;
 }
 
 //finds any empty space
@@ -37,7 +41,7 @@ int check::findempty()
         {
                 for(int ii=0; ii<4; ii++)
                 {
-                        if(b.pull(jj,ii)==0)
+                        if(tile[jj][ii]==0)
                         {  
                                emptyfound[count]=(jj*4)+ii;
                                count++;
@@ -55,7 +59,6 @@ int check::findempty()
         return emptyfound[end]+1;
 }
 
-//checks for empty space and then inserts a 2 or 4 there, then checks in the player won or lost yet.
 int check::randomnumber()
 {
         int space, row, col, value;
@@ -63,8 +66,7 @@ int check::randomnumber()
                 space --;
                 row = space/4;
                 col=space%4;
-                value = rand()%2;
-                value==1 ? b.set(row,col,4) : b.set(row,col,2);
+                tile[row][col]=2;
          }
          return win(); 
 }
@@ -72,12 +74,14 @@ int check::randomnumber()
 int check::win()
 {
         int end;
-        b.draw(); 
+        draw(); 
         if(max_value==2048){
-                 cout<<"You won!!!"<<endl;
+                 printw("You won!!!\n");
+                 refresh();
                  end = playagain();
-        }else if(findempty()==0){
-                cout<<"You lose, you loser!"<<endl;
+        }else if(findempty()==0 && possiblemoves()==0){
+                printw("You lose, you loser!\n");
+                refresh();
                 end=playagain();
         }else{
                  end = 1;
@@ -88,10 +92,11 @@ int check::win()
 int check::playagain()
 {
         char answer;
-        cout<<"Do you want to play again? (y or n)"<<endl;
+        printw("Do you want to play again? (y or n)\n");
+        refresh();
         do{
-                cin>>answer;
-        }while(answer!='Y' && answer!='y' && answer!='N' && answer!='n');      
+                answer=getch();
+        }while(answer!='Y' && answer!='y' && answer!='N' && answer!='n');  
         if(answer=='Y' || answer=='y')
         {
                 return 2;
@@ -99,5 +104,3 @@ int check::playagain()
                 return 0;
         }
 }
-
-

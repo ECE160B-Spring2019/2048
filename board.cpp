@@ -1,16 +1,6 @@
-class board{
-    protected:
-      int tile[4][4];
-    public:
-      board(){initialize();} //constructor
-      void initialize();
-      void draw();
-      void set(int, int, int);
-      int pull(int, int);  
-      ~board(){} //destructor
-      board(board&);
-      board& operator=(board& b){memcpy(tile, b.tile, sizeof(tile));} //operator assignment
-};
+#include "header.h"
+#include "board.h"
+using namespace std;
 
 //copy constructor
 board::board(board& b)
@@ -30,49 +20,37 @@ void board::initialize()
                 }
         }
         first_pos=rand()%16;
-        first_value=rand()%2;
         row=first_pos/4;
         col=first_pos%4;
-        first_value==0 ? tile[row][col]=2 : tile[row][col]=4;
+        tile[row][col]=2;
 }
 
-//prints the board out
 void board::draw()
 {
-        cout<<"*********************"<<endl;
+        clear();
+        printw("*************************\n"); 
         for(int jj=0; jj<4; jj++)
         {
-                cout<<"*";
+                printw("*");
                 for(int ii=0; ii<4; ii++)
                 {
                         if(tile[jj][ii]!=0){
                                 if(tile[jj][ii]<10){
-                                        cout<<"  "<<tile[jj][ii]<<" *";
+                                        printw("   %d *",tile[jj][ii]);
                                 }else if(tile[jj][ii]<100){
-                                        cout<<" "<<tile[jj][ii]<<" *";
+                                        printw("  %d *",tile[jj][ii]);
                                 }else if(tile[jj][ii]<1000){
-                                        cout<<tile[jj][ii]<<" *";
+                                        printw(" %d *",tile[jj][ii]);
                                 }else{
-                                        cout<<tile[jj][ii]<<"*";
+                                        printw("%d*",tile[jj][ii]);
                                 }
 
                         }else{
-                                cout<<"   *";
+                                printw("     *");
                         }
                 }
-        cout<<endl<<"*********************"<<endl;                   
+        printw("\n*************************\n");                   
         } 
-        cout<<endl;
-}
-
-//sets value in the array
-void board::set(int row, int col, int number)
-{
-        tile[row][col]=number;
-}
-
-//reads the value in the array
-int board::pull(int row, int col)
-{
-        return tile[row][col];
+        printw("\n");
+        refresh();
 }
