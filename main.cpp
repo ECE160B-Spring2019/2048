@@ -1,3 +1,7 @@
+#include "header.h"
+#include "check.h"
+using namespace std;
+
 int main()
 {
         initscr();
