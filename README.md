@@ -1,1 +1,8 @@
-# 2048
+This is a game which outputs a board of 4x4. In each spot, there is either a number or it is blank. With each turn, the player uses arrow keys to move the pieces. When the player hits a key the existing spots move in that direction to the last possible spot. If any of the existing spots are the same (for example two ‘4’s) then they combine by adding the two numbers in one spot. A random 2  is also placed on the board. 
+For example, if the player hits left, all the numbers will move to the leftmost available spot. If two of the same number are sitting next to each other, the numbers will be added together and combined into one space. A two will also be randomly added to the board.
+After each turn, the board will be printed out in the command line. 
+If the entire board is full and there is no possible moves left the player loses, and the player wins when they get the number 2048.
+We will have a class that contains everything related to the board, so that includes the actual values in the board, as well as a function that initializes the board, and prints the board in the command line.
+We will have another class that will be devoted to the player's moves. It will have a char to store what the player inputs and then have the different functions to move the values, as well as a function to pick which of the functions to call depending on the char, a function to check if values are the same and if they are to combine them, a function to insert a value in a random location, and a check if won or lost function.
+All inputs will be taken from the nucureses. All outputs (i.e. printing the board) will be printed on the ncurses window.
+
