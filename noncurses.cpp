@@ -73,30 +73,33 @@ class move: public board{
      protected:
         int max_value;
      public:
-        void move_up(int array[5][5]);
+        int move_up(int array[5][5]);
         void move_down(int array[5][5]);
         void move_left(int array[5][5]);
-        void move_right(int array[5][5]);
-        void combine_up(int array[5][5]);
+        int move_right(int array[5][5]);
+        int combine_up(int array[5][5]);
         void combine_down(int array[5][5]);
         void combine_left(int array[5][5]);
-        void combine_right(int array[5][5]);
+        int combine_right(int array[5][5]);
         move(){max_value=0;}
         ~move(){}
         move& operator=(move& o){}
         move(move& o){}
 };
 
-void move::move_up(int array [5][5]){
+int move::move_up(int array [5][5]){
   int counter;
   int a,b,c;
-
+  int moved=0;
   for (int counter=0;counter<3;counter++) {             //this cycles for 3 times to ensure that all the values are moved up
     for ( int column = 0; column < 4; column++) {      //loops through the columns
       for (int row=0; row < 4; row++) {               //loops through the rows within each column
         if (array [row][column]== 0) {               //if there is an empty spot then swap so that all the values gets "pushed" or moved up
           a= array[row][column];
           b=array[row+1][column];
+          if (b!=0) {
+            moved=1;
+          }
           c=b;
           b=a;
           a=c;
@@ -110,13 +113,18 @@ void move::move_up(int array [5][5]){
       }
     }
   }
-  return;
+  return moved;
 }
 
-void move::combine_up (int array [5][5]) {
+int move::combine_up (int array [5][5]) {
+  int moved=0;
   for(int column =0;column<4;column++) {
     for (int row =0;row<4;row++) {
       if (array[row][column] == array [row+1][column]) {
+        if (array[row][column]!=0) {
+          moved=1;
+        }
+        
         array[row][column] = array [row][column] * 2;
         array[row+1][column]=0;
         if (array[row][column] > max_value) {
@@ -126,7 +134,7 @@ void move::combine_up (int array [5][5]) {
     }
     move_up(array);
   }
-  return; 
+  return moved; 
 }
 
 //  else if (user_vertical_input == "s") {
@@ -217,15 +225,18 @@ void move::combine_left (int array [5][5]) {
   return;
 }
 
-void move::move_right(int array [5][5]) {
+int move::move_right(int array [5][5]) {
   int a,b,c;
-
+  int moved=0;
   for (int counter=0;counter<3;counter++) {
     for ( int row = 0; row <4; row++) {      //loops through the columns
-      for (int column=3; column >=0; column--) {        //loops through the rows 
+      for (int column=3; column >0; column--) {        //loops through the rows 
         if (array [row][column]== 0) {
           a= array[row][column];
           b=array[row][column-1];
+          if (b!=0) {
+            moved=1;
+          }
           c=b;
           b=a;
           a=c;
@@ -241,15 +252,18 @@ void move::move_right(int array [5][5]) {
     }
   }
  
-  return;
+  return moved;
 }
 
-void move::combine_right (int array [5][5]) {
-
+int move::combine_right (int array [5][5]) {
+  int combined =0;
   for(int row =0;row<4;row++) {
     for (int column =3;column>=0;column--) {
       if (column!=0) { 
         if (array[row][column] == array [row][column-1]) {
+          if (array[row][column] !=0){
+            combined = 1;
+          }
           array[row][column] = array [row][column] * 2;
           array[row][column-1]=0;
           if (array[row][column] > max_value) {
@@ -260,7 +274,7 @@ void move::combine_right (int array [5][5]) {
     }
     move_right(array);
   }
-  return;
+  return combined;
 }
 
 
@@ -389,6 +403,7 @@ int main()
         int answer;
         do{
                 check c;
+                int moved, combined;
                 //something with move
                 answer = c.randomnumber();
                 //randomnumber inserts a random number in a random spot and also checks if the player won or lost and if they did they ask if they want to play again. 
@@ -402,9 +417,14 @@ int main()
                         string s;
                         cin>>s;
                         if(s=="w" || s=="W"){
-                                c.move_up(c.tile);
-                                c.combine_up(c.tile);
-                                answer=c.randomnumber();
+                                moved=c.move_up(c.tile);
+                                combined =c.combine_up(c.tile);
+                                if (moved==1 || combined ==1) {
+                                  answer=c.randomnumber();
+                                }
+                                else {
+                                  answer=c.win();
+                                }
                         }else if(s=="s" || s=="S"){
                                 c.move_down(c.tile);
                                 c.combine_down(c.tile); 
@@ -414,9 +434,11 @@ int main()
                                 c.combine_left(c.tile);
                                 answer=c.randomnumber();
                         }else if(s=="d" || s=="D"){
-                                c.move_right(c.tile);
-                                c.combine_right(c.tile);
-                                answer=c.randomnumber();
+                                moved=c.move_right(c.tile);
+                                combined=c.combine_right(c.tile);
+                                if (moved==1||combined==1){
+                                  answer=c.randomnumber();
+                                }
                         }else{
                                 cout<<"Choice is invaild, please pick W, S, A, or D."<<endl;
                         }
