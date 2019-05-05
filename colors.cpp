@@ -454,12 +454,12 @@ int main()
         start_color();
        
         init_pair(1, COLOR_WHITE, COLOR_BLACK); //For boarder
-        init_pair(2, COLOR_BLACK, COLOR_WHITE); //For 2 and 4
-        init_pair(3, COLOR_WHITE, COLOR_MAGENTA); //For 8 and 16
-        init_pair(4, COLOR_WHITE, COLOR_RED); //For 32 and 64
-        init_pair(5, COLOR_BLACK, COLOR_YELLOW); //For 128 and 256
-        init_pair(6, COLOR_WHITE, COLOR_BLUE); //For 512 and 1024
-        init_pair(7, COLOR_BLACK, COLOR_CYAN); //For 2048
+        init_pair(2, COLOR_WHITE, COLOR_BLACK); //For 2 and 4
+        init_pair(3, COLOR_MAGENTA, COLOR_BLACK); //For 8 and 16
+        init_pair(4, COLOR_RED, COLOR_BLACK); //For 32 and 64
+        init_pair(5, COLOR_YELLOW, COLOR_BLACK); //For 128 and 256
+        init_pair(6, COLOR_BLUE, COLOR_BLACK); //For 512 and 1024
+        init_pair(7, COLOR_CYAN, COLOR_BLACK); //For 2048
 
         int answer, vmove, vcombine;
         do{
