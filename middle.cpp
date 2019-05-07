@@ -61,7 +61,7 @@ void board::draw()
                 {
                         if(tile[jj][ii]!=0){
                                 if(tile[jj][ii]==2){            //each number prints diffrent number of spaces
-                                        attron(COLOR_PAIR(2));
+                                        attron(COLOR_PAIR(3));
                                         printw("   %d ",tile[jj][ii]);
                                         attroff(COLOR_PAIR(2));
                                 }else if(tile[jj][ii]==4){
@@ -475,7 +475,7 @@ int main()
         init_pair(8, COLOR_MAGENTA, COLOR_YELLOW); //For 128 
         init_pair(9, COLOR_RED, COLOR_YELLOW); //For 256
         init_pair(10, COLOR_WHITE, COLOR_BLUE); //For 512
-        init_pair(11, COLOR_BLACK, COLOR_BLUE); //For 1024
+        init_pair(11, COLOR_BLACK, COLOR_GREEN); //For 1024
         init_pair(12, COLOR_BLACK, COLOR_CYAN); //For 2048
 
         int answer, vmove, vcombine;
