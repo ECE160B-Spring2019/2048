@@ -47,15 +47,15 @@ void board::draw()
                         if(tile[jj][ii]!=0){
                                 if(tile[jj][ii]==2){            //each number prints diffrent number of spaces and colors
                                         attron(COLOR_PAIR(2));
-                                        printw("   %d ",tile[jj][ii]);
+                                        printw("  %d  ",tile[jj][ii]);
                                         attroff(COLOR_PAIR(2));
                                 }else if(tile[jj][ii]==4){
                                         attron(COLOR_PAIR(3));
-                                        printw("   %d ",tile[jj][ii]);
+                                        printw("  %d  ",tile[jj][ii]);
                                         attroff(COLOR_PAIR(3));
                                 }else if(tile[jj][ii]==8){
                                         attron(COLOR_PAIR(4));
-                                        printw("   %d ",tile[jj][ii]);
+                                        printw("  %d  ",tile[jj][ii]);
                                         attroff(COLOR_PAIR(4));
                                 }else if(tile[jj][ii]==16){
                                         attron(COLOR_PAIR(5));
