@@ -8,6 +8,20 @@ int main()
         keypad(stdscr, TRUE);           //allows the use of the arrow keys
         cbreak();               
         noecho();                       //no echo in the board
+        start_color();
+        
+        init_pair(1, COLOR_WHITE, COLOR_BLACK); //For boarder
+        init_pair(2, COLOR_BLACK, COLOR_WHITE); //For 2 
+        init_pair(3, COLOR_BLACK, COLOR_YELLOW); //For 4
+        init_pair(4, COLOR_WHITE, COLOR_MAGENTA); //For 8
+        init_pair(5, COLOR_BLACK, COLOR_MAGENTA); //for 16
+        init_pair(6, COLOR_WHITE, COLOR_RED); //For 32 
+        init_pair(7, COLOR_BLACK, COLOR_RED); //for 64
+        init_pair(8, COLOR_MAGENTA, COLOR_YELLOW); //For 128 
+        init_pair(9, COLOR_RED, COLOR_YELLOW); //For 256
+        init_pair(10, COLOR_WHITE, COLOR_BLUE); //For 512
+        init_pair(11, COLOR_BLACK, COLOR_GREEN); //For 1024
+        init_pair(12, COLOR_BLACK, COLOR_CYAN); //For 2048
 
         int answer, vmove, vcombine;
         do{
@@ -54,8 +68,10 @@ int main()
                                 }
                                break;
                         default:
-                                printw("Choice is invaild, please use arrow keys.\n");        //if the user does not enter a valid key, then prompt an error message
-                                refresh();      //prints to board
+                                int row, col;
+                                char message[]="Choice is invalid, please use arrow key.";
+                                getmaxyx(stdscr, row, col);
+                                mvprintw((row/2+4),(col-strlen(message))/2,"%s\n", message);        //if the user does not enter a valid key, then prompt an error message
                         }
                         refresh();
                 }while(answer==1);      //while the player neither lost or won

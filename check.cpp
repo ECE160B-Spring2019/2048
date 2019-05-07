@@ -73,14 +73,17 @@ int check::randomnumber()
 
 int check::win()
 {
-        int end;
+        int end,row,col;
+        char message1[]="You won!!!";
+        char message2[]="You lose, you loser!"; 
+        getmaxyx(stdscr,row,col);
         draw();                                                //draw the board
         if(max_value==2048){                                   //if the player reaches 2048, he/she wins the game
-                 printw("You won!!!\n");
+                 mvprintw((row/2+4),(col-strlen(message1))/2,"%s\n",message1);
                  refresh();                                   //refresh the board
                  end = playagain();                           //ask if the player wants to play again
         }else if(findempty()==0 && possiblemoves()==0){       //check if all the tiles are filled up and if there are no more moves left to make 
-                printw("You lose, you loser!\n");             //print a loser message 
+                mvprintw((row/2+4),(col-strlen(message2))/2,"%s\n",message2); //print a loser message 
                 refresh();                                    //refresh the board
                 end=playagain();                              //ask if the player wants to play again
         }else{       
@@ -92,7 +95,10 @@ int check::win()
 int check::playagain()                                       //this function prompts the user a question asking if he/she wants to play again
 {
         char answer;                                         //a variable to store the input
-        printw("Do you want to play again? (y or n)\n");     //prompt question
+        int row, col;
+        getmaxyx(stdscr, row, col);
+        char message[]="Do you want to play again? (y or n)";
+        mvprintw(row/2+5,(col-strlen(message))/2,"%s\n",message);     //prompt question
         refresh();                                           
         do{
                 answer=getch();                              //takes care of invalid inputs 
@@ -104,5 +110,4 @@ int check::playagain()                                       //this function pro
                 return 0;
         }
 }
-
 
