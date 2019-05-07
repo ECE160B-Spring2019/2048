@@ -60,38 +60,50 @@ void board::draw()
                 for(int ii=0; ii<4; ii++)               //prints the diffrent values of the board
                 {
                         if(tile[jj][ii]!=0){
-                                if(tile[jj][ii]<5){            //each number prints diffrent number of spaces
+                                if(tile[jj][ii]==2){            //each number prints diffrent number of spaces
                                         attron(COLOR_PAIR(2));
                                         printw("   %d ",tile[jj][ii]);
                                         attroff(COLOR_PAIR(2));
-                                }else if(tile[jj][ii]==8){
+                                }else if(tile[jj][ii]==4){
                                         attron(COLOR_PAIR(3));
                                         printw("   %d ",tile[jj][ii]);
                                         attroff(COLOR_PAIR(3));
-                                }else if(tile[jj][ii]==16){
-                                        attron(COLOR_PAIR(3));
-                                        printw("  %d ",tile[jj][ii]);
-                                        attroff(COLOR_PAIR(3));
-                                }else if(tile[jj][ii]<65){
+                                }else if(tile[jj][ii]==8){
                                         attron(COLOR_PAIR(4));
-                                        printw("  %d ",tile[jj][ii]);
+                                        printw("   %d ",tile[jj][ii]);
                                         attroff(COLOR_PAIR(4));
-                                }else if(tile[jj][ii]<257){
+                                }else if(tile[jj][ii]==16){
                                         attron(COLOR_PAIR(5));
-                                        printw(" %d ",tile[jj][ii]);
+                                        printw("  %d ",tile[jj][ii]);
                                         attroff(COLOR_PAIR(5));
-                                }else if(tile[jj][ii]==512){
+                                }else if(tile[jj][ii]==32){
                                         attron(COLOR_PAIR(6));
-                                        printw(" %d ",tile[jj][ii]);
-                                        attroff(COLOR_PAIR(6));
-                                }else if(tile[jj][ii]==1024){
-                                        attron(COLOR_PAIR(6));
-                                        printw("%d",tile[jj][ii]);
-                                        attroff(COLOR_PAIR(6));
-                                }else{
+                                        printw("  %d ",tile[jj][ii]);
+                                        attroff(COLOR_PAIR(6)); 
+                                }else if(tile[jj][ii]==64){
                                         attron(COLOR_PAIR(7));
-                                        printw("%d",tile[jj][ii]);
+                                        printw("  %d ",tile[jj][ii]);
                                         attroff(COLOR_PAIR(7));
+                                }else if(tile[jj][ii]==128){
+                                        attron(COLOR_PAIR(8));
+                                        printw(" %d ",tile[jj][ii]);
+                                        attroff(COLOR_PAIR(8));
+                                }else if(tile[jj][ii]==256){
+                                        attron(COLOR_PAIR(9));
+                                        printw(" %d ",tile[jj][ii]);
+                                        attroff(COLOR_PAIR(9));
+                                }else if(tile[jj][ii]==512){
+                                        attron(COLOR_PAIR(10));
+                                        printw(" %d ",tile[jj][ii]);
+                                        attroff(COLOR_PAIR(10));
+                                }else if(tile[jj][ii]==1024){
+                                        attron(COLOR_PAIR(11));
+                                        printw("%d ",tile[jj][ii]);
+                                        attroff(COLOR_PAIR(11));
+                                }else{
+                                        attron(COLOR_PAIR(12));
+                                        printw("%d ",tile[jj][ii]);
+                                        attroff(COLOR_PAIR(12));
                                 }
                                 attron(COLOR_PAIR(1));
                                 printw("*");
@@ -452,14 +464,19 @@ int main()
         cbreak();               
         noecho();                       //no echo in the board
         start_color();
-       
+        
         init_pair(1, COLOR_WHITE, COLOR_BLACK); //For boarder
-        init_pair(2, COLOR_BLACK, COLOR_WHITE); //For 2 and 4
-        init_pair(3, COLOR_WHITE, COLOR_MAGENTA); //For 8 and 16
-        init_pair(4, COLOR_WHITE, COLOR_RED); //For 32 and 64
-        init_pair(5, COLOR_BLACK, COLOR_YELLOW); //For 128 and 256
-        init_pair(6, COLOR_WHITE, COLOR_BLUE); //For 512 and 1024
-        init_pair(7, COLOR_BLACK, COLOR_CYAN); //For 2048
+        init_pair(2, COLOR_BLACK, COLOR_WHITE); //For 2 
+        init_pair(3, COLOR_BLACK, COLOR_YELLOW); //For 4
+        init_pair(4, COLOR_WHITE, COLOR_MAGENTA); //For 8
+        init_pair(5, COLOR_BLACK, COLOR_MAGENTA); //for 16
+        init_pair(6, COLOR_WHITE, COLOR_RED); //For 32 
+        init_pair(7, COLOR_BLACK, COLOR_RED); //for 64
+        init_pair(8, COLOR_MAGENTA, COLOR_YELLOW); //For 128 
+        init_pair(9, COLOR_RED, COLOR_YELLOW); //For 256
+        init_pair(10, COLOR_WHITE, COLOR_BLUE); //For 512
+        init_pair(11, COLOR_BLACK, COLOR_BLUE); //For 1024
+        init_pair(12, COLOR_BLACK, COLOR_CYAN); //For 2048
 
         int answer, vmove, vcombine;
         do{
