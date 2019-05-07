@@ -11,5 +11,3 @@ class board{
       board(board&);
       board& operator=(board& b){memcpy(tile, b.tile, sizeof(tile));} //operator assignment
 };
-
-

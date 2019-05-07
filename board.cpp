@@ -30,7 +30,7 @@ void board::draw()
 {
         int row, col;
         clear();                //clear old board out
-        char mesg[]="*************************";
+        char mesg[]="+-----+-----+-----+-----+";
         getmaxyx(stdscr,row,col);		// get the number of rows and columns
         col=(col-strlen(mesg))/2;
         row=(row/2)-5; 
@@ -40,7 +40,7 @@ void board::draw()
         for(int jj=0; jj<4; jj++)
         {
                 attron(COLOR_PAIR(1));
-                mvprintw((row+(2*jj)+1),col,"*");
+                mvprintw((row+(2*jj)+1),col,"|");
                 attroff(COLOR_PAIR(1));
                 for(int ii=0; ii<4; ii++)               //prints the diffrent values of the board
                 {
@@ -91,11 +91,11 @@ void board::draw()
                                         attroff(COLOR_PAIR(12));
                                 }
                                 attron(COLOR_PAIR(1));
-                                printw("*");
+                                printw("|");
                                 attroff(COLOR_PAIR(1));
                         }else{
                                 attron(COLOR_PAIR(1));
-                                printw("     *");
+                                printw("     |");
                                 attroff(COLOR_PAIR(1));
                         }
                 }
