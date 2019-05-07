@@ -25,7 +25,6 @@ int move::move_up(int array [5][5]){                 //overall, this function mo
         }
         if (row==3){                                 //if you are at the last row then set the value equal to 0 or blank 
           array[row][column]=0;                      //the last elements of the rows are empty if a swap is performed
-    //      array[row+1][column]=-1;
         }
         }
       }
